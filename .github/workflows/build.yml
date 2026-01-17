@@ -1,11 +1,8 @@
-name: Build MKR Messenger
+name: Build Delta Chat iOS
 
 on:
   push:
     branches: [ main, master ]
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
   workflow_dispatch:
 
 jobs:
@@ -23,62 +20,77 @@ jobs:
         sudo xcode-select --switch /Applications/Xcode_15.0.app/Contents/Developer
         xcodebuild -version
 
-    - name: Install Pods
+    - name: Install CocoaPods
       run: |
         sudo gem install cocoapods
-        pod install
+        pod install --repo-update
 
-    - name: Build
+    - name: Build for iOS
       run: |
         xcodebuild -workspace deltachat-ios.xcworkspace \
           -scheme deltachat-ios \
-          -sdk iphoneos \
           -configuration Release \
+          -sdk iphoneos \
           -destination 'generic/platform=iOS' \
           ONLY_ACTIVE_ARCH=NO \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO
 
-    - name: Create IPA
+    - name: Create Archive
       run: |
-        mkdir -p build
+        xcodebuild -workspace deltachat-ios.xcworkspace \
+          -scheme deltachat-ios \
+          -configuration Release \
+          -sdk iphoneos \
+          -destination 'generic/platform=iOS' \
+          -archivePath build/deltachat-ios.xcarchive \
+          archive \
+          ONLY_ACTIVE_ARCH=NO \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO
 
-        # Создаем .app из build
-        APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "deltachat-ios.app" | head -1)
-        if [ -z "$APP_PATH" ]; then
-          echo "App not found, creating archive first..."
-          xcodebuild -workspace deltachat-ios.xcworkspace \
-            -scheme deltachat-ios \
-            -sdk iphoneos \
-            -archivePath build/MKR.xcarchive \
-            archive \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO || true
-          APP_PATH=$(find build/MKR.xcarchive -name "deltachat-ios.app" | head -1)
-        fi
+    - name: Export IPA
+      run: |
+        cat > ExportOptions.plist <<'EOF'
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>method</key>
+            <string>development</string>
+            <key>teamID</key>
+            <string></string>
+            <key>compileBitcode</key>
+            <false/>
+            <key>uploadSymbols</key>
+            <false/>
+            <key>signingStyle</key>
+            <string>automatic</string>
+        </dict>
+        </plist>
+        EOF
 
-        echo "App path: $APP_PATH"
-        cp -r "$APP_PATH" build/ 2>/dev/null || echo "Copy failed, continuing..."
-
-        # Создаем IPA структуру
-        mkdir -p build/Payload
-        if [ -d "build/deltachat-ios.app" ]; then
-          cp -r build/deltachat-ios.app build/Payload/
-          cd build
-          zip -r MKRMessenger.ipa Payload/
-          cd ..
-        fi
+        xcodebuild -exportArchive \
+          -archivePath build/deltachat-ios.xcarchive \
+          -exportPath build/ipa \
+          -exportOptionsPlist ExportOptions.plist
 
     - name: Upload IPA
       uses: actions/upload-artifact@v4
       with:
-        name: MKR-Messenger
-        path: build/MKRMessenger.ipa
-        retention-days: 7
+        name: DeltaChat-iOS
+        path: build/ipa/*.ipa
+        retention-days: 30
 
-    - name: Summary
+    - name: Build Summary
       run: |
-        echo "## ✅ Build Complete" >> $GITHUB_STEP_SUMMARY
+        echo "## ✅ Build Successful" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Download IPA from artifacts below" >> $GITHUB_STEP_SUMMARY
+        echo "**Delta Chat iOS**" >> $GITHUB_STEP_SUMMARY
+        echo "**Xcode**: $(xcodebuild -version | head -n 1)" >> $GITHUB_STEP_SUMMARY
+        echo "**Platform**: iOS (arm64)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📥 Download IPA" >> $GITHUB_STEP_SUMMARY
+        echo "Available in artifacts below" >> $GITHUB_STEP_SUMMARY

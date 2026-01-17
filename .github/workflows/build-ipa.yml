@@ -1,0 +1,53 @@
+name: Build IPA for Device
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-13
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Install CocoaPods
+      run: pod install
+    
+    - name: Build Archive
+      run: |
+        xcodebuild archive \
+          -workspace deltachat-ios.xcworkspace \
+          -scheme deltachat-ios \
+          -sdk iphoneos \
+          -configuration Release \
+          -archivePath build/MKR.xcarchive \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO
+    
+    - name: Export IPA
+      run: |
+        mkdir -p build/ipa
+        xcodebuild -exportArchive \
+          -archivePath build/MKR.xcarchive \
+          -exportPath build/ipa \
+          -exportOptionsPlist deltachat-ios/ExportOptions.plist || true
+        
+        # Создаем IPA вручную если экспорт не сработал
+        if [ ! -f build/ipa/*.ipa ]; then
+          cd build/MKR.xcarchive/Products/Applications
+          mkdir Payload
+          cp -r *.app Payload/
+          zip -r ../../../../ipa/MKR-unsigned.ipa Payload
+        fi
+    
+    - name: Upload IPA
+      uses: actions/upload-artifact@v4
+      with:
+        name: MKR-IPA-unsigned
+        path: build/ipa/*.ipa

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the application" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!-- Admin Navigation Controller -->
+        <scene sceneID="tne-QT-ufn">
+            <objects>
+                <navigationController id="Y6N-4q-6aX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" id="H8j-6Q-dGR" largeTitle="YES">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescriptor" name="Helvetica-Bold" family="Helvetica" pointSize="17" weight="bold"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7Yb-yC-WVz" kind="relationship" relationship="rootViewController" id="JxZ-4r-3mH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-0n-ypr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="54"/>
+        </scene>
+
+        <!-- Admin Main Menu -->
+        <scene sceneID="7Yb-yC-WVz">
+            <objects>
+                <tableViewController id="KLP-n4-4Uo" customClass="AdminTableViewController" customModule="deltachat_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertically="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="66" id="d8c-vY-g9Yr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizableYES"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AdminCell" id="5yK-3l-nV9" textLabel="5yK-3l-nV9">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                tableViewCellContentView key="contentView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins=" insetsLayoutMarginsFromSafeArea="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K8m-HB-qVf">
+                                        <rect key="frame" x="16" y="18" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="YUX-lN-jdL"/>
+                                            <constraint firstAttribute="width" constant="30" id="7eK-p0-kmR"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yK-3l-nV9">
+                                        <rect key="frame" x="62" y="23" width="315" height="20.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <fontDescription key="fontDescription style="body"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="bKx-qW-8fz"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOr" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="6W3-5p-Q3L"/>
+                                            <constraint firstAttribute="leading" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="HmY-8W-q6Y"/>
+                                        </constraints>
+                                    </label>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections>
+                            <tableViewSection id="6fK-3M-9uh" headerTitle="Управление">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AdminCell" id="8rR-Qc-yeU">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins=" insetsLayoutMarginsFromSafeArea="YES">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <imageView userInteractionEnabled="NO" tag="100" image="ic_verified" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="16" y="18" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </imageView>
+                                            <label userInteractionEnabled="NO" tag="200" text="Пользователи" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="62" y="23" width="315" height="20.5"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="dRg-cE-L5G9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="5eM-8M-gO4e"/>
+                                                    <constraint firstAttribute="leading" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="yXc-Jt-aqW"/>
+                                                </constraints>
+                                            </label>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AdminCell" id="a5f-a8-pKb">
+                                        <rect key="frame" x="0.0" y="66" width="393" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins=" insetsLayoutMarginsFromSafeArea="YES">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <imageView userInteractionEnabled="NO" tag="100" image="cogwheel" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="16" y="18" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </imageView>
+                                            <label userInteractionEnabled="NO" tag="200" text="Настройки сервера" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="62" y="23" width="315" height="20.5"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="HkK-Dv-6oD"/>
+                                                    <constraint firstAttribute="trailing" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="8fZ-lQ-9bT"/>
+                                                    <constraint firstAttribute="leading" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="bA6-Lg-nB7"/>
+                                                </constraints>
+                                            </label>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="dP2-jQ-dhD" headerTitle="Информация">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdminCell" id="bJL-gO-dF5">
+                                        <rect key="frame" x="0.0" y="198" width="393" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins=" insetsLayoutMarginsFromSafeArea="YES">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <imageView userInteractionEnabled="NO" tag="100" image="info" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="16" y="18" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </imageView>
+                                            <label userInteractionEnabled="NO" tag="200" text="Статистика сервера" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO">
+                                                <rect key="frame" x="62" y="23" width="315" height="20.5"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="zNf-jd-8tD"/>
+                                                    <constraint firstAttribute="trailing" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="QK6-qg-1oU"/>
+                                                    <constraint firstAttribute="leading" secondItem="K8m-HB-qVf" secondAttribute="trailing" constant="8" symbolic="YES" id="hRJ-3g-9vP"/>
+                                                </constraints>
+                                            </label>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Админ-панель" id="3Ua-hO-7ZgI"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Vt-8f-xYs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="750"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cogwheel" width="30" height="30"/>
+        <image name="ic_verified" width="30" height="30"/>
+        <image name="info" width="30" height="30"/>
+    </resources>
+</document>

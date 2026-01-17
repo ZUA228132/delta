@@ -1,0 +1,28 @@
+# Manually triggered GitHub Actions workflow
+# to build a Windows repl.exe which users can
+# download to debug complex bugs.
+
+name: Build Windows REPL .exe
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  build_repl:
+    name: Build REPL example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          show-progress: false
+          persist-credentials: false
+      - uses: cachix/install-nix-action@0b0e072294b088b73964f1d72dfdac0951439dbd # v31
+      - name: Build
+        run: nix build .#deltachat-repl-win64
+      - name: Upload binary
+        uses: actions/upload-artifact@v5
+        with:
+          name: repl.exe
+          path: "result/bin/deltachat-repl.exe"

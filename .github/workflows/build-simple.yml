@@ -43,7 +43,7 @@ jobs:
         zip -r MKRMessenger-unsigned.ipa Payload/
 
     - name: Upload IPA
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: MKR-Messenger-IPA
         path: build/MKRMessenger-unsigned.ipa

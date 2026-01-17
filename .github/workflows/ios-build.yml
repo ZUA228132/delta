@@ -28,7 +28,7 @@ jobs:
         swift --version
 
     - name: Cache CocoaPods
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -96,7 +96,7 @@ jobs:
           -exportOptionsPlist ExportOptions.plist
 
     - name: Upload IPA artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: MKR-Messenger-unsigned
         path: build/ipa/*.ipa

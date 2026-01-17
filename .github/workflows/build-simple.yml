@@ -1,0 +1,49 @@
+name: Build MKR iOS (Simple)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Pods
+      run: |
+        sudo gem install cocoapods
+        pod install
+
+    - name: Build
+      run: |
+        xcodebuild -workspace deltachat-ios.xcworkspace \
+          -scheme deltachat-ios \
+          -configuration Release \
+          -sdk iphoneos \
+          ONLY_ACTIVE_ARCH=NO \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+
+    - name: Create IPA
+      run: |
+        mkdir -p build
+        # Копируем .app из DerivedData
+        find ~/Library/Developer/Xcode/DerivedData -name "deltachat-ios.app" -exec cp -r {} build/ \;
+
+        # Создаем структуру IPA
+        mkdir -p build/Payload
+        cp -r build/deltachat-ios.app build/Payload/
+        cd build
+        zip -r MKRMessenger-unsigned.ipa Payload/
+
+    - name: Upload IPA
+      uses: actions/upload-artifact@v3
+      with:
+        name: MKR-Messenger-IPA
+        path: build/MKRMessenger-unsigned.ipa
